@@ -1,0 +1,12 @@
+{
+    "redis": {
+        "host": "redis"
+    },
+	"db": {
+		"username": "adeline",
+		"password": "adeline",
+		"host": "ady-tezyr.mongodb.net",
+		"port": "27017",
+		"name": "test"
+	}
+}

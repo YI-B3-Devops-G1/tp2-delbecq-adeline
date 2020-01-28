@@ -1,0 +1,42 @@
+version: '3'
+services:
+  reverseproxy:
+    container_name: reverseproxy
+    hostname: reverseproxy
+    image: "nginx:latest"
+    build:
+      context: ./nginx
+      dockerfile: dockerfile
+    ports:
+      - 3000:80 
+  api:
+    container_name: node_api
+    build:
+      context: ./api
+      dockerfile: dockerfile
+    environment:
+      - API_PORT=3000
+      - DB_HOST=postgres  
+      - DB_PORT=5432     
+      - DB_NAME=adybou
+      - DB_USER=postgres
+      - DB_PASSWORD=adeline
+      - REDIS_HOST=redis 
+      - NODE_ENV=production
+  db:
+    container_name: postgres
+    volumes:
+        - "./pgdata:/var/lib/postgresql/data/pgdata"
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: adeline
+      POSTGRES_DB: 'adybou'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_HOST: 'postgres'
+      PGDATA: /tmp
+  
+  redis:
+    container_name: redis
+    image: "redis"
+    restart: always
